@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 
 export const CTASection = () => {
   return (
-    /* เจมปรับจาก py เป็น pt เพื่อรักษาความสูงด้านบน แต่สั่ง pb-0 เพื่อลดช่องว่างด้านล่างครับ */
-    <section className="bg-white pt-[8vw] md:pt-[5vw] pb-0">
+    /* เจมปรับ pb จาก 0 เป็นระยะที่พอดี เพื่อให้มีช่องว่างด้านล่างก่อนขึ้น Section ใหม่ครับ */
+    <section className="bg-white pt-[8vw] md:pt-[5vw] pb-[12vw] md:pb-[6vw]">
       <Container>
         <motion.div
           initial={{ opacity: 0, scale: 0.98 }}
@@ -14,18 +14,17 @@ export const CTASection = () => {
           transition={{ duration: 0.8 }}
           className="relative rounded-[6vw] md:rounded-[2.5vw] bg-[#0B132B] border border-slate-800 py-[12vw] md:py-[6vw] px-[6vw] md:px-[4vw] overflow-hidden text-center flex flex-col items-center justify-center"
         >
-          {/* Background Gradient Effects */}
+          {/* ... โค้ดส่วนที่เหลือด้านในเหมือนเดิมเลยครับ ... */}
+          
           <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_30%_20%,#3b82f608,transparent_50%)] pointer-events-none" />
           <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_70%_80%,#10b98108,transparent_50%)] pointer-events-none" />
           
           <div className="relative z-10 w-full max-w-3xl mx-auto text-center">
-            {/* Headline - Modern Sans-serif, หนาจัด, ขนาดเดิม */}
             <h2 className="text-[5.5vw] md:text-[2.8vw] lg:text-[2.2vw] font-black text-white mb-[8vw] md:mb-[3.5vw] leading-[1.3] tracking-tighter font-sans">
               ระบบที่ดีทำให้ธุรกิจไปต่อได้ <br />
               โดยไม่ต้องรอคุณทุกขั้นตอน
             </h2>
 
-            {/* CTA Button - ปรับ Workflow เป็นตัวพิมพ์ใหญ่เฉพาะตัวแรก และเอา uppercase ออก */}
             <button
               suppressHydrationWarning
               onClick={() => document.getElementById("contact-form")?.scrollIntoView({ behavior: "smooth" })}

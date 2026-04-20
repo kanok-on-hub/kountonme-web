@@ -6,43 +6,32 @@ import { motion, AnimatePresence } from "framer-motion";
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  // ตรวจสอบว่า id เหล่านี้ตรงกับที่เขียนไว้ในแต่ละ Section หรือไม่
   const navLinks = [
-    { name: "ปัญหาที่พบ", id: "problem" },
-    { name: "ทีมงานดิจิทัล", id: "workforce" },
+    { name: "ปัญหาของคุณ", id: "problem" },
+    { name: "บริการของเรา", id: "workforce" },
     { name: "วิธีการทำงาน", id: "how-it-works" },
-    { name: "ตัวอย่างทีมงาน", id: "use-cases" },
+    { name: "ตัวอย่างจริง", id: "use-cases" },
     { name: "คำถามที่พบบ่อย", id: "faq" },
-    { name: "คุยกับทีม BIZ LAB", id: "contact-form" },
   ];
 
   const handleScroll = (id: string) => {
     setIsOpen(false);
-    
-    // ใช้รหัสที่เสถียรกว่าในการค้นหา Element
     setTimeout(() => {
       const target = document.getElementById(id);
       if (target) {
-        // ปรับ offset ตามความหนาจริงของ Navbar
-        const offset = 80; 
+        const offset = 80;
         const targetPosition = target.getBoundingClientRect().top + window.scrollY - offset;
-
-        window.scrollTo({
-          top: targetPosition,
-          behavior: "smooth",
-        });
-      } else {
-        console.warn(`ไม่พบ Section ที่มี id: ${id}`);
+        window.scrollTo({ top: targetPosition, behavior: "smooth" });
       }
-    }, 300); // หน่วงเวลาให้เมนูพับปิดเสร็จก่อนเลื่อน
+    }, 300);
   };
 
   return (
     <nav className="fixed top-0 left-0 w-full bg-[#0B132B]/95 backdrop-blur-sm z-50 border-b border-white/5">
       <div className="max-w-6xl mx-auto px-6 py-3 flex justify-between items-center">
-        
+
         {/* Brand Logo */}
-        <div 
+        <div
           className="flex flex-col justify-center cursor-pointer group"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
@@ -54,8 +43,27 @@ export const Navbar = () => {
           </span>
         </div>
 
+        {/* Desktop Nav */}
+        <div className="hidden md:flex items-center gap-6">
+          {navLinks.map((link) => (
+            <button
+              key={link.name}
+              onClick={() => handleScroll(link.id)}
+              className="text-slate-300 hover:text-white text-sm font-medium transition-colors"
+            >
+              {link.name}
+            </button>
+          ))}
+          <button
+            onClick={() => handleScroll("contact-form")}
+            className="bg-white text-[#0B132B] text-sm font-bold px-5 py-2 rounded-full hover:bg-[#6EE7B7] transition-all"
+          >
+            เริ่มออกแบบ Workflow
+          </button>
+        </div>
+
         {/* Burger Button */}
-        <button 
+        <button
           className="md:hidden text-white p-1.5 hover:bg-white/5 rounded-full transition-colors"
           onClick={() => setIsOpen(!isOpen)}
         >
@@ -63,7 +71,7 @@ export const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile Menu Dropdown */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -78,15 +86,17 @@ export const Navbar = () => {
                 <button
                   key={link.name}
                   onClick={() => handleScroll(link.id)}
-                  className={`text-left py-3.5 text-[4.2vw] font-black font-sans tracking-tight border-b border-white/5 last:border-none transition-all active:bg-white/5 px-2 ${
-                    link.id === "contact-form" 
-                    ? "text-[#6EE7B7] mt-1 pt-4" 
-                    : "text-slate-200"
-                  }`}
+                  className="text-left py-3.5 text-[4.2vw] font-black font-sans tracking-tight border-b border-white/5 last:border-none transition-all active:bg-white/5 px-2 text-slate-200"
                 >
                   {link.name}
                 </button>
               ))}
+              <button
+                onClick={() => handleScroll("contact-form")}
+                className="text-left py-3.5 text-[4.2vw] font-black font-sans tracking-tight text-[#6EE7B7] mt-1 pt-4 px-2"
+              >
+                เริ่มออกแบบ Workflow
+              </button>
             </div>
           </motion.div>
         )}
