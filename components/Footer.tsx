@@ -25,13 +25,13 @@ export const Footer = () => {
             </h3>
             <ul className="flex flex-col gap-[2.5vw] md:gap-[0.8vw]">
               <li className="flex items-center min-h-[4vw] md:min-h-[1.2vw]">
-                <a href="#workforce" className="text-[3.2vw] md:text-[1vw] lg:text-[0.85vw] text-slate-500 hover:text-[#0B132B] transition-colors font-medium font-sans">ทีมงานดิจิทัล</a>
+                <a href="#workforce" className="text-[3.2vw] md:text-[1vw] lg:text-[0.85vw] text-slate-500 hover:text-[#0B132B] transition-colors font-medium font-sans">บริการของเรา</a>
               </li>
               <li className="flex items-center min-h-[4vw] md:min-h-[1.2vw]">
                 <a href="#how-it-works" className="text-[3.2vw] md:text-[1vw] lg:text-[0.85vw] text-slate-500 hover:text-[#0B132B] transition-colors font-medium font-sans">วิธีการทำงาน</a>
               </li>
               <li className="flex items-center min-h-[4vw] md:min-h-[1.2vw]">
-                <a href="#use-cases" className="text-[3.2vw] md:text-[1vw] lg:text-[0.85vw] text-slate-500 hover:text-[#0B132B] transition-colors font-medium font-sans">ตัวอย่างทีมงาน</a>
+                <a href="#use-cases" className="text-[3.2vw] md:text-[1vw] lg:text-[0.85vw] text-slate-500 hover:text-[#0B132B] transition-colors font-medium font-sans">ตัวอย่างจริง</a>
               </li>
             </ul>
           </div>
