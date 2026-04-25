@@ -2,8 +2,16 @@ import type { Metadata } from "next";
 import { Playfair_Display, Inter, IBM_Plex_Sans_Thai } from "next/font/google";
 import "./globals.css";
 
-const playfair = Playfair_Display({ variable: "--font-serif", subsets: ["latin"] });
-const inter = Inter({ variable: "--font-sans", subsets: ["latin"] });
+const playfair = Playfair_Display({ 
+  variable: "--font-serif", 
+  subsets: ["latin"] 
+});
+
+const inter = Inter({ 
+  variable: "--font-sans", 
+  subsets: ["latin"] 
+});
+
 const ibmPlexThai = IBM_Plex_Sans_Thai({
   variable: "--font-thai",
   subsets: ["thai", "latin"],
@@ -15,10 +23,17 @@ export const metadata: Metadata = {
   description: "Redesign Your Workflow, Redefine Your Future.",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="th" className={`${playfair.variable} ${inter.variable} ${ibmPlexThai.variable} h-full antialiased scroll-smooth`}>
-      {/* เติม suppressHydrationWarning ตรงนี้ เพื่อกัน Error จาก Browser Extension ครับ */}
+    <html 
+      lang="th" 
+      data-scroll-behavior="smooth"
+      className={`${playfair.variable} ${inter.variable} ${ibmPlexThai.variable} h-full antialiased`}
+    >
       <body 
         suppressHydrationWarning 
         className="min-h-full font-thai text-slate-900 bg-[#FAFAFA] m-0 p-0 overflow-x-hidden flex flex-col"

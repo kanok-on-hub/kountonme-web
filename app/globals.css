@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 @theme {
-  --font-serif: var(--font-serif), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
-  --font-sans: var(--font-sans), var(--font-thai), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --font-serif: var(--font-serif), ui-serif, Georgia, Cambria, serif;
+  --font-sans: var(--font-sans), var(--font-thai), ui-sans-serif, system-ui, sans-serif;
   --font-thai: var(--font-thai);
   
   --color-brand-blue: #002B49;
@@ -15,7 +15,7 @@
   --foreground: #FAFAFA;
 }
 
-/* Reset layout and prevent horizontal overflow */
+/* ป้องกันหน้าเด้งและจัดการ Scroll */
 html, body {
   margin: 0;
   padding: 0;
@@ -25,40 +25,21 @@ html, body {
   min-height: 100%;
   background-color: var(--background);
   color: var(--foreground);
-  scroll-behavior: smooth;
   
-  /* Hide scrollbar for Firefox and IE */
+  /* ปิด Scrollbar เพื่อความคลีน */
   scrollbar-width: none; 
   -ms-overflow-style: none;
 }
 
-/* Hide scrollbar for Chrome, Safari and Edge */
+/* ปิด Smooth Scroll อัตโนมัติที่ทำให้หน้าเด้ง */
+html {
+  scroll-behavior: auto !important;
+}
+
 ::-webkit-scrollbar {
   display: none;
-  width: 0 !important;
-  height: 0 !important;
 }
 
-/* Typography styles */
-h1, h2, h3, h4, .font-serif {
-  font-family: var(--font-serif);
-  letter-spacing: -0.02em;
-}
-
-p, span, div, .font-sans {
-  font-family: var(--font-sans);
-  line-height: 1.6;
-}
-
-/* Image handling */
-img {
-  max-width: 100%;
-  height: auto;
-}
-
-/* Box sizing reset */
 * {
   box-sizing: border-box;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
 }

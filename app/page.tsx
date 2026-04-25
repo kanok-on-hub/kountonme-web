@@ -1,50 +1,26 @@
-import { Navbar } from "@/components/Navbar";
-import { Hero } from "@/components/Hero";
-import { ProblemSection } from "@/components/ProblemSection";
-import { PhilosophySection } from "@/components/PhilosophySection";
-import { WorkforceSection } from "@/components/WorkforceSection";
-import { HowItWorksSection } from "@/components/HowItWorksSection";
-import { UseCaseSection } from "@/components/UseCaseSection";
-import { FAQSection } from "@/components/FAQSection";
-import { CTASection } from "@/components/CTASection";
-import { ContactForm } from "@/components/ContactForm";
-import { Footer } from "@/components/Footer";
-import { ScrollReveal } from "@/components/ScrollReveal";
+"use client";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
-export default function Home() {
-  return (
-    <>
-      <Navbar />
-      <main className="w-full flex flex-col m-0 p-0 overflow-x-hidden">
-        
-        <Hero />
-        
-        <ProblemSection />
-        
-        <div className="w-full bg-[#0B132B]">
-          <PhilosophySection />
-        </div>
-        
-        <WorkforceSection />
-        
-        <HowItWorksSection />
-        
-        <ScrollReveal direction="up" delay={0.1}>
-          <UseCaseSection />
-        </ScrollReveal>
-        
-        <ScrollReveal direction="up" delay={0.1}>
-          <CTASection />
-        </ScrollReveal>
+export default function RootPage() {
+  const router = useRouter();
 
-        <ScrollReveal direction="up" delay={0.1}>
-          <FAQSection />
-        </ScrollReveal>
+  useEffect(() => {
+    // 1. เช็กก่อนว่าเขาเคยเลือกภาษาไว้เองหรือเปล่า (จดไว้ใน localStorage)
+    const savedLang = localStorage.getItem("user-language");
+    
+    if (savedLang) {
+      // ถ้าเคยเลือกไว้แล้ว ให้ไปตามนั้นเลย ไม่ต้องเดา
+      router.replace(savedLang);
+      return;
+    }
 
-        <ContactForm />
+    // 2. ถ้าไม่เคยเลือก (เข้าครั้งแรก) ค่อยเดาจาก Browser
+    const userLang = (navigator.language || (navigator as any).userLanguage).toLowerCase();
+    const targetPath = userLang.startsWith("th") ? "/th" : "/en";
+    
+    router.replace(targetPath);
+  }, [router]);
 
-      </main>
-      <Footer />
-    </>
-  );
+  return <div className="bg-[#0B132B] min-h-screen" />;
 }
