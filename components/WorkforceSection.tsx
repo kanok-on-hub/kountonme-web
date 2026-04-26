@@ -61,10 +61,11 @@ export const WorkforceSection = ({ lang = "TH" }: { lang?: string }) => {
       ]
     },
     EN: {
-      title: <>The team that runs <br className="md:hidden" /> while you lead</>,
+      title: <>The team that runs <br className="md:hidden" /> while you lead.</>,
       description: (
         <>
-          Each one handles a specific part, <br className="md:hidden" />
+          {/* ลบ md:hidden ออกเพื่อให้ตัดบรรทัดในคอมด้วยครับ */}
+          Each one handles a specific part, <br />
           so you can focus on what only you can do.
         </>
       ),

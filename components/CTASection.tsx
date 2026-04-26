@@ -21,7 +21,7 @@ export const CTASection = ({ lang = "TH" }: { lang?: string }) => {
           without you in the room.
         </>
       ),
-      button: "✦ start designing your workflow"
+      button: "✦ start designing your Workflow"
     }
   };
 

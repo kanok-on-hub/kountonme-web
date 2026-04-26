@@ -53,7 +53,7 @@ export const ProblemSection = ({ lang = "TH" }: { lang?: string }) => {
     },
     EN: {
       mainTitle: (
-        <>Growth still waits <br className="md:hidden" />at every step</>
+        <>Growth still waits <br className="md:hidden" />at every step.</>
       ),
       problems: [
         {

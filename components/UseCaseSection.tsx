@@ -70,7 +70,7 @@ export const UseCaseSection = ({ lang = "TH" }: { lang?: string }) => {
           subtitle: "From documents to system, zero manual input.", 
           image: "/images/usecase-document.png",
           problems: ["Data re-entered every month", "Manual file conversion is slow", "Unstructured data, hard to audit"],
-          results: ["Faster month-end close", "Digital records, searchable instantly", "Accountants analyse, not just enter."],
+          results: ["Faster month-end close", "Digital records, searchable instantly", "Accountants analyse, not just enter"],
           labels: { prob: "Problems", res: "Results" }
         }
       ]

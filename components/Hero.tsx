@@ -26,7 +26,7 @@ export const Hero = ({ lang = "TH" }: { lang?: string }) => {
           so you can focus on what only you can do.
         </>
       ),
-      button: "Tell us about your workflow"
+      button: "tell us about your Workflow"
     }
   };
 
