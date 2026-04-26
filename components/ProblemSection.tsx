@@ -79,8 +79,8 @@ export const ProblemSection = ({ lang = "TH" }: { lang?: string }) => {
           content: (
             <>
               {/* ปรับให้ตัดบรรทัดตามที่พี่ต้องการในมือถือครับ */}
-              Every hour spent managing tasks <br />
-              is an hour taken from building the future.
+              Every hour spent managing tasks is<br />
+              an hour taken from building the future.
             </>
           )
         }
