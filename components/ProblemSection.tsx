@@ -78,6 +78,7 @@ export const ProblemSection = ({ lang = "TH" }: { lang?: string }) => {
           title: <>Your time is going <br className="md:hidden" /> to the wrong work</>,
           content: (
             <>
+              {/* ปรับให้ตัดบรรทัดตามที่พี่ต้องการในมือถือครับ */}
               Every hour spent managing tasks <br />
               is an hour taken from building the future.
             </>
@@ -98,7 +99,7 @@ export const ProblemSection = ({ lang = "TH" }: { lang?: string }) => {
     <section id="problem" className="pt-[20vw] md:pt-[8vw] pb-[20vw] md:pb-[8vw] bg-slate-50">
       <div className="max-w-[100vw] lg:max-w-[92vw] mx-auto px-[6vw] md:px-[4vw]">
 
-        {/* หัวข้อหลัก: ไม่มีหัว (font-display) */}
+        {/* หัวข้อหลัก */}
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -109,6 +110,7 @@ export const ProblemSection = ({ lang = "TH" }: { lang?: string }) => {
           {t.mainTitle}
         </motion.h2>
 
+        {/* การ์ดปัญหา 3 ใบ */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-[6vw] md:gap-[1vw] w-full">
           {t.problems.map((prob, idx) => (
             <motion.div
@@ -119,16 +121,17 @@ export const ProblemSection = ({ lang = "TH" }: { lang?: string }) => {
               transition={{ duration: 0.6, delay: idx * 0.1 }}
               className="h-full p-[8vw] md:p-[2vw] rounded-[6vw] md:rounded-[1.5vw] bg-white border border-slate-200 shadow-sm flex flex-col items-center text-center group hover:shadow-md transition-all"
             >
+              {/* ไอคอน */}
               <div className="w-[14vw] md:w-[3.5vw] h-[14vw] md:h-[3.5vw] rounded-full bg-rose-50 flex items-center justify-center text-rose-500 mb-[6vw] md:mb-[1.8vw] group-hover:scale-110 transition-transform">
                 {icons[idx]}
               </div>
 
-              {/* หัวข้อการ์ด: ไม่มีหัว (font-display) */}
+              {/* หัวข้อการ์ด */}
               <h3 className={`font-black text-[5vw] md:text-[1.5vw] lg:text-[1.1vw] mb-[3vw] md:mb-[1vw] text-slate-900 tracking-tighter leading-tight ${lang === 'TH' ? 'font-display' : 'font-sans'}`}>
                 {prob.title}
               </h3>
 
-              {/* เนื้อหาบรรยาย: มีหัว (font-sans) */}
+              {/* เนื้อหาบรรยาย */}
               <div className="text-[3.5vw] md:text-[1.1vw] lg:text-[0.85vw] text-slate-500 leading-relaxed max-w-[95%] mx-auto opacity-90 font-medium font-sans">
                 {prob.content}
               </div>
@@ -136,6 +139,7 @@ export const ProblemSection = ({ lang = "TH" }: { lang?: string }) => {
           ))}
         </div>
 
+        {/* Punchline ด้านล่าง */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -143,7 +147,6 @@ export const ProblemSection = ({ lang = "TH" }: { lang?: string }) => {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-center mt-[15vw] md:mt-[5vw] max-w-3xl mx-auto"
         >
-          {/* ส่วน Footer (Punchline): เจมปรับให้ "ไม่มีหัว" (font-display) เพื่อความ Impact ครับ */}
           <p className={`text-[4vw] md:text-[1.3vw] lg:text-[1.1vw] font-bold text-rose-500 leading-relaxed tracking-tighter opacity-100 italic ${lang === 'TH' ? 'font-display' : 'font-sans'}`}>
             {t.footer}
           </p>
