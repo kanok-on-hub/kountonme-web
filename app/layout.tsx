@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Playfair_Display, Inter, IBM_Plex_Sans_Thai } from "next/font/google";
 import "./globals.css";
 
-// --- Font Configuration ---
+// --- การตั้งค่าฟอนต์ (Font Configuration) ---
 const playfair = Playfair_Display({ 
   variable: "--font-serif", 
   subsets: ["latin"] 
@@ -19,7 +19,7 @@ const ibmPlexThai = IBM_Plex_Sans_Thai({
   weight: ["300", "400", "500", "600", "700"],
 });
 
-// --- SEO Metadata Configuration ---
+// --- การตั้งค่า SEO Metadata (หัวใจสำคัญของ SEO 2 ภาษา) ---
 export const metadata: Metadata = {
   title: "Kount on Me Biz Lab | วางระบบ Automation และพนักงานดิจิทัลสำหรับ SME",
   description: "ปรับปรุงกระบวนการธุรกิจ (BPI) ด้วยระบบ AI Automation และพนักงานดิจิทัลบน LINE & Google Workspace ช่วย SME และสำนักงานบัญชีลดงาน Manual เพิ่มกำไร ด้วยเครื่องมือที่คุณมีอยู่แล้ว",
@@ -36,8 +36,17 @@ export const metadata: Metadata = {
   authors: [{ name: "Kount on Me Biz Lab" }],
   creator: "Kount on Me Biz Lab",
   metadataBase: new URL("https://kountonme.com"),
-  
-  // OpenGraph สำหรับโชว์การ์ดสวยๆ ใน LINE / Facebook
+
+  // 🌍 ส่วนที่เพิ่มใหม่: เชื่อมโยงหน้าภาษาไทยและอังกฤษ (Hreflang)
+  alternates: {
+    canonical: 'https://kountonme.com/th',
+    languages: {
+      'th-TH': 'https://kountonme.com/th',
+      'en-US': 'https://kountonme.com/en',
+    },
+  },
+
+  // OpenGraph สำหรับการโชว์การ์ดเมื่อแชร์ลง LINE / Facebook
   openGraph: {
     title: "Kount on Me Biz Lab | เปลี่ยนงาน Manual เป็นระบบอัตโนมัติ",
     description: "Redesign Your Workflow, Redefine Your Future. ยกระดับธุรกิจด้วยพนักงานดิจิทัลที่ทำงานแทนคุณได้ 24 ชม.",
@@ -47,15 +56,15 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/og-image.png", // อย่าลืมเอารูปขนาด 1200x630 ไปวางในโฟลเดอร์ public นะครับ
+        url: "/og-image.png", // อย่าลืมใส่รูปขนาด 1200x630 ไว้ในโฟลเดอร์ public นะครับ
         width: 1200,
         height: 630,
         alt: "Kount on Me Biz Lab Automation Service",
       },
     ],
   },
-  
-  // สำหรับแชร์ใน X (Twitter)
+
+  // สำหรับการแสดงผลบน X (Twitter)
   twitter: {
     card: "summary_large_image",
     title: "Kount on Me Biz Lab | Automation Solutions",
@@ -64,7 +73,7 @@ export const metadata: Metadata = {
   },
 };
 
-// --- Root Layout Component ---
+// --- ส่วนโครงสร้างหลักของเว็บไซต์ (Root Layout) ---
 export default function RootLayout({
   children,
 }: {
