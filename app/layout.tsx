@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Playfair_Display, Inter, IBM_Plex_Sans_Thai } from "next/font/google";
 import "./globals.css";
 
+// --- Font Configuration ---
 const playfair = Playfair_Display({ 
   variable: "--font-serif", 
   subsets: ["latin"] 
@@ -18,11 +19,52 @@ const ibmPlexThai = IBM_Plex_Sans_Thai({
   weight: ["300", "400", "500", "600", "700"],
 });
 
+// --- SEO Metadata Configuration ---
 export const metadata: Metadata = {
-  title: "Kount on Me Biz Lab | Redesign Your Workflow",
-  description: "Redesign Your Workflow, Redefine Your Future.",
+  title: "Kount on Me Biz Lab | วางระบบ Automation และพนักงานดิจิทัลสำหรับ SME",
+  description: "ปรับปรุงกระบวนการธุรกิจ (BPI) ด้วยระบบ AI Automation และพนักงานดิจิทัลบน LINE & Google Workspace ช่วย SME และสำนักงานบัญชีลดงาน Manual เพิ่มกำไร ด้วยเครื่องมือที่คุณมีอยู่แล้ว",
+  keywords: [
+    "Automation SME", 
+    "Business Process Improvement", 
+    "ที่ปรึกษาวางระบบบริษัท", 
+    "พนักงานดิจิทัล", 
+    "Apps Script Thailand", 
+    "ระบบอนุมัติใน LINE", 
+    "Kount on Me Biz Lab",
+    "Digital Worker Thailand"
+  ],
+  authors: [{ name: "Kount on Me Biz Lab" }],
+  creator: "Kount on Me Biz Lab",
+  metadataBase: new URL("https://kountonme.com"),
+  
+  // OpenGraph สำหรับโชว์การ์ดสวยๆ ใน LINE / Facebook
+  openGraph: {
+    title: "Kount on Me Biz Lab | เปลี่ยนงาน Manual เป็นระบบอัตโนมัติ",
+    description: "Redesign Your Workflow, Redefine Your Future. ยกระดับธุรกิจด้วยพนักงานดิจิทัลที่ทำงานแทนคุณได้ 24 ชม.",
+    url: "https://kountonme.com",
+    siteName: "Kount on Me Biz Lab",
+    locale: "th_TH",
+    type: "website",
+    images: [
+      {
+        url: "/og-image.png", // อย่าลืมเอารูปขนาด 1200x630 ไปวางในโฟลเดอร์ public นะครับ
+        width: 1200,
+        height: 630,
+        alt: "Kount on Me Biz Lab Automation Service",
+      },
+    ],
+  },
+  
+  // สำหรับแชร์ใน X (Twitter)
+  twitter: {
+    card: "summary_large_image",
+    title: "Kount on Me Biz Lab | Automation Solutions",
+    description: "เปลี่ยน Google Sheet & LINE ให้เป็นระบบหลังบ้านอัจฉริยะ",
+    images: ["/og-image.png"],
+  },
 };
 
+// --- Root Layout Component ---
 export default function RootLayout({
   children,
 }: {

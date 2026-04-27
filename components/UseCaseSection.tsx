@@ -8,7 +8,7 @@ export const UseCaseSection = ({ lang = "TH" }: { lang?: string }) => {
       headline: <>ตัวอย่างจริงจากธุรกิจ<br className="md:hidden" />ที่ใช้ทีมงานดิจิทัล</>,
       description: (
         <>
-          เราไม่ไช่ซอฟต์แวร์ให้คุณไปเรียนรู้เอง<br />
+          เราไม่ใช่ซอฟต์แวร์ให้คุณไปเรียนรู้เอง<br />
           แต่คือทีมงานดิจิทัลที่ทำงานในแต่ละส่วนแทนคุณ
         </>
       ),
@@ -33,7 +33,7 @@ export const UseCaseSection = ({ lang = "TH" }: { lang?: string }) => {
           title: "Accounting entry",
           subtitle: "จากเอกสารสู่ระบบบัญชีโดยไม่ต้องแตะ",
           image: "/images/usecase-document.png",
-          problems: ["บันทึกเอกสารชุดเดิมซ้ำทุกเดือน", "เสียเวลาแปลงไฟล์เข้าโปรแกรมบัญชี", "ข้อมูลไม่เป็นระบบ สืบค้นยาก"],
+          problems: ["บันทึกเอกสารชุดเดิมซ้ำทุกเดือน", "เสียเวลแปลงไฟล์เข้าโปรแกรมบัญชี", "ข้อมูลไม่เป็นระบบ สืบค้นยาก"],
           results: ["ลดขั้นตอนซ้ำซ้อน ปิดบัญชีเร็วขึ้น", "ข้อมูลดิจิทัล ค้นหาได้ทันที", "ทีมบัญชีเน้นวิเคราะห์ ไม่ใช่แค่กรอก"],
           labels: { prob: "ปัญหา", res: "ผลลัพธ์" }
         }
@@ -118,6 +118,7 @@ export const UseCaseSection = ({ lang = "TH" }: { lang?: string }) => {
                   <h3 className="font-black text-[6vw] md:text-[1.5vw] lg:text-[1.2vw] text-slate-900 mb-[1.5vw] md:mb-[0.2vw] font-sans tracking-tighter leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
                     {useCase.title}
                   </h3>
+                  {/* เปลี่ยนเป็นสีเขียวมินต์สว่าง #6EE7B7 */}
                   <p className={`text-[3.8vw] md:text-[1.1vw] lg:text-[0.9vw] font-bold text-[#6EE7B7] tracking-widest ${lang === 'TH' ? 'font-display' : 'font-sans'}`}>
                     {useCase.subtitle}
                   </p>
@@ -139,13 +140,15 @@ export const UseCaseSection = ({ lang = "TH" }: { lang?: string }) => {
                   </div>
 
                   <div className="flex flex-col border-t lg:border-t-0 lg:border-l border-gray-100 pt-[6vw] lg:pt-0 lg:pl-[3vw]">
-                    <h4 className={`font-black text-[3.5vw] md:text-[1vw] lg:text-[0.8vw] mb-[3vw] md:mb-[1vw] text-green-600 tracking-widest ${lang === 'TH' ? 'font-display' : 'font-sans'}`}>
+                    {/* เปลี่ยน Label ผลลัพธ์เป็นสีเขียวมินต์สว่าง #6EE7B7 */}
+                    <h4 className={`font-black text-[3.5vw] md:text-[1vw] lg:text-[0.8vw] mb-[3vw] md:mb-[1vw] text-[#6EE7B7] tracking-widest ${lang === 'TH' ? 'font-display' : 'font-sans'}`}>
                       {useCase.labels.res}
                     </h4>
                     <div className="flex flex-col gap-[3vw] md:gap-[0.6vw]">
                       {useCase.results.map((res, i) => (
                         <div key={i} className="flex items-start gap-[2vw] md:gap-[0.5vw] text-[3.8vw] md:text-[1.1vw] lg:text-[1vw] text-slate-900 font-black font-sans leading-snug lg:whitespace-nowrap">
-                          <span className="text-green-600 shrink-0 font-black">✓</span>
+                          {/* เปลี่ยนเครื่องหมายถูกเป็นสีเขียวมินต์สว่าง #6EE7B7 */}
+                          <span className="text-[#6EE7B7] shrink-0 font-black">✓</span>
                           <p className="tracking-tighter">{res}</p>
                         </div>
                       ))}
