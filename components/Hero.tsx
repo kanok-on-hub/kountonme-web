@@ -3,34 +3,41 @@ import React from "react";
 import { motion } from "framer-motion";
 import { MessageSquare } from "lucide-react";
 
-export const Hero = ({ lang = "TH" }: { lang?: string }) => {
+interface HeroProps {
+  lang?: string;
+  data?: any;
+}
+
+export default function Hero({ lang = "TH", data }: HeroProps) {
   
-  const content = {
+  // --- 1. ข้อความดั้งเดิมสำรองไว้ในโค้ด (Fallback Content) ---
+  const defaultContent = {
     TH: {
       title1: "Redesign Your Workflow,",
       title2: "Redefine Your Future.",
-      subtitle: (
-        <>
-          เปลี่ยนงานซ้ำ ๆ ให้เป็นระบบอัตโนมัติด้วยทีมงานดิจิทัล<br />
-          ที่ช่วยจัดการงานหลังบ้าน เพื่อให้คุณโฟกัสกับการเติบโต
-        </>
-      ),
+      subtitle: "เปลี่ยนงานซ้ำ ๆ ให้เป็นระบบอัตโนมัติด้วยทีมงานดิจิทัล\nที่ช่วยจัดการงานหลังบ้าน เพื่อให้คุณโฟกัสกับการเติบโต",
       button: "เล่า Workflow ของคุณให้เราฟัง"
     },
     EN: {
       title1: "Redesign Your Workflow,",
       title2: "Redefine Your Future.",
-      subtitle: (
-        <>
-          Let a digital workforce handle the manual work,<br />
-          so you can focus on what only you can do.
-        </>
-      ),
+      subtitle: "Let a digital workforce handle the manual work,\nso you can focus on what only you can do.",
       button: "tell us about your Workflow"
     }
   };
 
-  const t = lang === "EN" ? content.EN : content.TH;
+  // --- 2. Logic เลือกข้อมูล: ถ้ามี data จาก Sanity ให้ใช้ ถ้าไม่มีให้ใช้ค่าสำรอง ---
+  const t = lang === "EN" ? {
+    title1: data?.title1_en || defaultContent.EN.title1,
+    title2: data?.title2_en || defaultContent.EN.title2,
+    subtitle: data?.subtitle_en || defaultContent.EN.subtitle,
+    button: data?.button_en || defaultContent.EN.button
+  } : {
+    title1: data?.title1_th || defaultContent.TH.title1,
+    title2: data?.title2_th || defaultContent.TH.title2,
+    subtitle: data?.subtitle_th || defaultContent.TH.subtitle,
+    button: data?.button_th || defaultContent.TH.button
+  };
 
   return (
     <section className="w-full bg-[#0B132B] m-0 p-0 border-none relative overflow-hidden flex flex-col items-center justify-center min-h-[85vh] md:min-h-0 md:py-[15vw]">
@@ -45,22 +52,22 @@ export const Hero = ({ lang = "TH" }: { lang?: string }) => {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="w-full text-center flex flex-col items-center"
         >
-          {/* Main Title - เป็นภาษาอังกฤษ ใช้ font-sans (Modern) ได้เลยครับ */}
-          <h1 className="text-[6vw] md:text-[5.5vw] lg:text-[4.8vw] font-black font-sans leading-[1.1] text-white tracking-tighter mb-[3.5vw] md:mb-[2.5vw]">
+          {/* Main Title - ใช้ whitespace-pre-line เพื่อรองรับการขึ้นบรรทัดใหม่ */}
+          <h1 className="text-[6vw] md:text-[5.5vw] lg:text-[4.8vw] font-black font-sans leading-[1.1] text-white tracking-tighter mb-[3.5vw] md:mb-[2.5vw] whitespace-pre-line">
             {t.title1}<br />
             <span className="text-[#6EE7B7]">{t.title2}</span>
           </h1>
 
-          {/* Subtitle - ภาษาไทยใช้ font-sans (แบบมีหัว) เพื่อความน่าเชื่อถือ */}
-          <p className="text-[3.2vw] md:text-[1.8vw] lg:text-[1.2vw] text-slate-300 max-w-[85%] md:max-w-2xl mx-auto leading-relaxed mb-[7vw] md:mb-[4vw] font-medium font-sans">
+          {/* Subtitle - ภาษาไทยใช้ font-sans (แบบมีหัว) ตามดีไซน์เดิมของพี่ครับ */}
+          <p className="text-[3.2vw] md:text-[1.8vw] lg:text-[1.2vw] text-slate-300 max-w-[85%] md:max-w-2xl mx-auto leading-relaxed mb-[7vw] md:mb-[4vw] font-medium font-sans whitespace-pre-line">
             {t.subtitle}
           </p>
 
-          {/* Button - เจมปรับให้ภาษาไทยใช้ font-display (ไม่มีหัว) เพื่อความเฉี่ยวครับ */}
+          {/* Button - เจมปรับ ID เป็น "contact" ให้ตรงกับที่เราคุยกันล่าสุดนะพี่ */}
           <div className="flex items-center justify-center relative z-20">
             <button
               onClick={() => {
-                const element = document.getElementById("contact-form");
+                const element = document.getElementById("contact");
                 if (element) {
                   element.scrollIntoView({ behavior: "smooth" });
                 }
@@ -75,4 +82,4 @@ export const Hero = ({ lang = "TH" }: { lang?: string }) => {
       </div>
     </section>
   );
-};
+}

@@ -1,17 +1,15 @@
 "use client";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { urlFor } from "@/sanity/lib/image";
 
-export const UseCaseSection = ({ lang = "TH" }: { lang?: string }) => {
-  const content = {
+export const UseCaseSection = ({ lang = "TH", data }: { lang?: string, data?: any }) => {
+  
+  // --- 1. ข้อมูลชุดที่ถูกต้อง (Fallback Content) ตามที่พี่ส่งมาเป๊ะๆ ---
+  const defaultContent = {
     TH: {
       headline: <>ตัวอย่างจริงจากธุรกิจ<br className="md:hidden" />ที่ใช้ทีมงานดิจิทัล</>,
-      description: (
-        <>
-          เราไม่ใช่ซอฟต์แวร์ให้คุณไปเรียนรู้เอง<br />
-          แต่คือทีมงานดิจิทัลที่ทำงานในแต่ละส่วนแทนคุณ
-        </>
-      ),
+      description: <>เราไม่ใช่ซอฟต์แวร์ให้คุณไปเรียนรู้เอง<br />แต่คือทีมงานดิจิทัลที่ทำงานในแต่ละส่วนแทนคุณ</>,
       cases: [
         {
           title: "Logistics tracking",
@@ -41,13 +39,7 @@ export const UseCaseSection = ({ lang = "TH" }: { lang?: string }) => {
     },
     EN: {
       headline: <>Real examples.<br className="md:hidden" /> Real results.</>,
-      description: (
-        <>
-          We build a digital workforce that steps in<br className="hidden md:block" />
-          <br className="md:hidden" /> 
-          and handles each part of the work.
-        </>
-      ),
+      description: <>We build a digital workforce that steps in<br className="hidden md:block" /> and handles each part of the work.</>,
       cases: [
         {
           title: "Logistics tracking",
@@ -77,23 +69,48 @@ export const UseCaseSection = ({ lang = "TH" }: { lang?: string }) => {
     }
   };
 
-  const t = lang === "EN" ? content.EN : content.TH;
+  // --- 2. Logic การเลือกข้อมูล (Safe Mapping) ---
+  const currentLang = (lang === "EN" ? "EN" : "TH") as "EN" | "TH";
+  
+  // เช็กว่ามี data และมี cases ไหม ถ้าไม่มีเลย ให้ใช้ defaultContent ยกชุด
+  const t = (data && data.cases && data.cases.length > 0) ? {
+    headline: (lang === "EN" ? data.headline_en : data.headline_th) || defaultContent[currentLang].headline,
+    description: (lang === "EN" ? data.description_en : data.description_th) || defaultContent[currentLang].description,
+    cases: data.cases.map((c: any, idx: number) => {
+      // ดึงข้อมูลสำรองรายตัว (ถ้า idx เกินจำนวนที่มีในโค้ด ให้ถอยไปเอาอันแรกมากันพัง)
+      const fb = defaultContent[currentLang].cases[idx] || defaultContent[currentLang].cases[0];
+      
+      return {
+        title: c.title || fb.title,
+        subtitle: (lang === "EN" ? c.subtitle_en : c.subtitle_th) || fb.subtitle,
+        image: c.image ? urlFor(c.image).url() : fb.image,
+        problems: (lang === "EN" ? c.problems_en : c.problems_th) || fb.problems,
+        results: (lang === "EN" ? c.results_en : c.results_th) || fb.results,
+        labels: {
+          prob: (lang === "EN" ? c.label_prob_en : c.label_prob_th) || fb.labels.prob,
+          res: (lang === "EN" ? c.label_res_en : c.label_res_th) || fb.labels.res
+        }
+      };
+    })
+  } : defaultContent[currentLang];
 
   return (
     <section id="use-cases" className="bg-white py-[16vw] md:py-[6vw] overflow-hidden">
       <div className="w-full max-w-[100vw] lg:max-w-[92vw] mx-auto px-[6vw] md:px-[4vw]">
         
+        {/* หัวข้อหลัก */}
         <div className="text-center mb-[12vw] md:mb-[6vw]">
-          <h2 className={`text-[7.5vw] md:text-[3.5vw] lg:text-[2.2vw] font-black text-slate-900 mb-[6vw] md:mb-[1.5vw] tracking-tighter ${lang === 'TH' ? 'font-display' : 'font-sans'}`}>
+          <h2 className={`text-[7.5vw] md:text-[3.5vw] lg:text-[2.2vw] font-black text-slate-900 mb-[6vw] md:mb-[1.5vw] tracking-tighter whitespace-pre-line ${lang === 'TH' ? 'font-display' : 'font-sans'}`}>
             {t.headline}
           </h2>
-          <div className="text-[4vw] md:text-[1.5vw] lg:text-[1.2vw] text-slate-500 leading-relaxed max-w-3xl mx-auto text-center font-medium font-sans">
+          <div className="text-[4vw] md:text-[1.5vw] lg:text-[1.2vw] text-slate-500 leading-relaxed max-w-3xl mx-auto text-center font-medium font-sans whitespace-pre-line">
             {t.description}
           </div>
         </div>
 
+        {/* รายการ Cases */}
         <div className="flex flex-col gap-[8vw] md:gap-[3vw]">
-          {t.cases.map((useCase, idx) => (
+          {t.cases.map((useCase: any, idx: number) => (
             <motion.div
               key={idx}
               initial={{ opacity: 0, y: 20 }}
@@ -102,6 +119,7 @@ export const UseCaseSection = ({ lang = "TH" }: { lang?: string }) => {
               transition={{ duration: 0.6, delay: idx * 0.1 }}
               className="flex flex-col md:flex-row bg-white rounded-[6vw] md:rounded-[1.5vw] border border-gray-100 shadow-sm overflow-hidden hover:shadow-xl transition-all duration-300"
             >
+              {/* รูปภาพประกอบ */}
               <div className="w-full md:w-[30vw] lg:w-[22vw] shrink-0">
                 <div className="relative w-full h-[60vw] md:h-full min-h-[260px] bg-slate-50">
                   <Image
@@ -113,24 +131,25 @@ export const UseCaseSection = ({ lang = "TH" }: { lang?: string }) => {
                 </div>
               </div>
 
+              {/* เนื้อหาด้านใน */}
               <div className="p-[8vw] md:p-[3.5vw] flex flex-col justify-center flex-1 w-full overflow-hidden">
                 <div className="mb-[6vw] md:mb-[1.5vw]">
                   <h3 className="font-black text-[6vw] md:text-[1.5vw] lg:text-[1.2vw] text-slate-900 mb-[1.5vw] md:mb-[0.2vw] font-sans tracking-tighter leading-tight whitespace-nowrap overflow-hidden text-ellipsis">
                     {useCase.title}
                   </h3>
-                  {/* เปลี่ยนเป็นสีเขียวมินต์สว่าง #6EE7B7 */}
                   <p className={`text-[3.8vw] md:text-[1.1vw] lg:text-[0.9vw] font-bold text-[#6EE7B7] tracking-widest ${lang === 'TH' ? 'font-display' : 'font-sans'}`}>
                     {useCase.subtitle}
                   </p>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-[8vw] md:gap-[3vw] mt-[2vw]">
+                  {/* ฝั่งปัญหา */}
                   <div className="flex flex-col">
                     <h4 className={`font-black text-[3.5vw] md:text-[1vw] lg:text-[0.8vw] mb-[3vw] md:mb-[1vw] text-red-500 tracking-widest ${lang === 'TH' ? 'font-display' : 'font-sans'}`}>
-                      {useCase.labels.prob}
+                      {useCase.labels?.prob}
                     </h4>
                     <div className="flex flex-col gap-[3vw] md:gap-[0.6vw]">
-                      {useCase.problems.map((prob, i) => (
+                      {useCase.problems?.map((prob: string, i: number) => (
                         <div key={i} className="flex items-start gap-[2vw] md:gap-[0.5vw] text-[3.8vw] md:text-[1.1vw] lg:text-[1vw] text-slate-600 font-medium font-sans leading-snug lg:whitespace-nowrap">
                           <span className="text-red-500 shrink-0 font-black">✕</span>
                           <p className="tracking-tighter opacity-85">{prob}</p>
@@ -139,15 +158,14 @@ export const UseCaseSection = ({ lang = "TH" }: { lang?: string }) => {
                     </div>
                   </div>
 
+                  {/* ฝั่งผลลัพธ์ */}
                   <div className="flex flex-col border-t lg:border-t-0 lg:border-l border-gray-100 pt-[6vw] lg:pt-0 lg:pl-[3vw]">
-                    {/* เปลี่ยน Label ผลลัพธ์เป็นสีเขียวมินต์สว่าง #6EE7B7 */}
                     <h4 className={`font-black text-[3.5vw] md:text-[1vw] lg:text-[0.8vw] mb-[3vw] md:mb-[1vw] text-[#6EE7B7] tracking-widest ${lang === 'TH' ? 'font-display' : 'font-sans'}`}>
-                      {useCase.labels.res}
+                      {useCase.labels?.res}
                     </h4>
                     <div className="flex flex-col gap-[3vw] md:gap-[0.6vw]">
-                      {useCase.results.map((res, i) => (
+                      {useCase.results?.map((res: string, i: number) => (
                         <div key={i} className="flex items-start gap-[2vw] md:gap-[0.5vw] text-[3.8vw] md:text-[1.1vw] lg:text-[1vw] text-slate-900 font-black font-sans leading-snug lg:whitespace-nowrap">
-                          {/* เปลี่ยนเครื่องหมายถูกเป็นสีเขียวมินต์สว่าง #6EE7B7 */}
                           <span className="text-[#6EE7B7] shrink-0 font-black">✓</span>
                           <p className="tracking-tighter">{res}</p>
                         </div>

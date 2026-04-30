@@ -1,63 +1,60 @@
 "use client";
+import React, { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { useState } from "react";
 
-export const ContactForm = ({ lang = "TH" }: { lang?: string }) => {
+export const ContactForm = ({ lang = "TH", data }: { lang?: string, data?: any }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<{ email?: string; tel?: string }>({});
 
-  const content = {
+  const defaultContent = {
     TH: {
       headline: "คุยกับทีม BIZ LAB",
-      subheadline: (
-        <>
-          เล่าให้เราฟังได้เลยค่ะ ไม่ว่าจะเป็นปัญหาที่เจอ <br />
-          หรืออยากรู้ว่าช่วยอะไรได้บ้าง เราพร้อมตอบค่ะ
-        </>
-      ),
-      labels: {
-        name: "ชื่อ-สกุล*",
-        email: "อีเมล*",
-        tel: "เบอร์โทรศัพท์*",
-        message: "ข้อความ"
-      },
-      errors: {
-        email: "⚠️ รูปแบบอีเมลไม่ถูกต้องค่ะ",
-        tel: "⚠️ ต้องขึ้นต้นด้วย 0 และมี 10 หลักค่ะ"
-      },
+      subheadline: "เล่าให้เราฟังได้เลยค่ะ ไม่ว่าจะเป็นปัญหาที่เจอ\nหรืออยากรู้ว่าช่วยอะไรได้บ้าง เราพร้อมตอบค่ะ",
+      line: "แชทปรึกษาทีมงานผ่าน LINE",
+      lineLink: "https://line.me/R/ti/p/@290rtmez",
+      labels: { name: "ชื่อ-สกุล*", email: "อีเมล*", tel: "เบอร์โทรศัพท์*", message: "ข้อความ" },
+      errors: { email: "⚠️ รูปแบบอีเมลไม่ถูกต้องค่ะ", tel: "⚠️ ต้องขึ้นต้นด้วย 0 และมี 10 หลักค่ะ" },
       button: "ส่งข้อมูลหาทีมงาน",
       submitting: "กำลังส่งข้อมูล...",
       success: "ได้รับข้อมูลแล้วค่ะ ทีม Biz Lab จะติดต่อกลับหาคุณเร็ว ๆ นี้นะคะ",
-      error: "ขออภัยค่ะ เกิดข้อผิดพลาดเล็กน้อย กรุณาลองใหม่อีกครั้ง",
-      line: "แชทปรึกษาทีมงานผ่าน LINE"
+      error: "ขออภัยค่ะ เกิดข้อผิดพลาดเล็กน้อย กรุณาลองใหม่อีกครั้ง"
     },
     EN: {
       headline: "Let's talk.",
-      subheadline: (
-        <>
-          Tell us what's on your plate. We'll take it from there.
-        </>
-      ),
-      labels: {
-        name: "Full name*",
-        email: "Email*",
-        tel: "Phone number*",
-        message: "Message"
-      },
-      errors: {
-        email: "⚠️ That doesn't look like a valid email.",
-        tel: "⚠️ Please enter a valid 10-digit phone number."
-      },
+      subheadline: "Tell us what's on your plate. We'll take it from there.",
+      line: "Chat with us on LINE",
+      lineLink: "https://line.me/R/ti/p/@290rtmez",
+      labels: { name: "Full name*", email: "Email*", tel: "Phone number*", message: "Message" },
+      errors: { email: "⚠️ That doesn't look like a valid email.", tel: "⚠️ Please enter a valid 10-digit phone number." },
       button: "Send it over",
       submitting: "Sending...",
       success: "Got it. We'll be in touch shortly.",
-      error: "Something went wrong. Give it another try.",
-      line: "Chat with us on LINE"
+      error: "Something went wrong. Give it another try."
     }
   };
 
-  const t = lang === "EN" ? content.EN : content.TH;
+  // --- 🟢 แก้ไข Logic: ดึงข้อมูลจาก CMS ถ้ามี ถ้าไม่มีใช้ Fallback (ครอบคลุมทุกฟิลด์) ---
+  const t = {
+    headline: (lang === "EN" ? data?.headline_en : data?.headline_th) || defaultContent[lang as 'TH'|'EN'].headline,
+    subheadline: (lang === "EN" ? data?.subheadline_en : data?.subheadline_th) || defaultContent[lang as 'TH'|'EN'].subheadline,
+    line: (lang === "EN" ? data?.line_text_en : data?.line_text_th) || defaultContent[lang as 'TH'|'EN'].line,
+    lineLink: data?.line_link || defaultContent[lang as 'TH'|'EN'].lineLink,
+    labels: {
+      name: (lang === "EN" ? data?.label_name_en : data?.label_name_th) || defaultContent[lang as 'TH'|'EN'].labels.name,
+      email: (lang === "EN" ? data?.label_email_en : data?.label_email_th) || defaultContent[lang as 'TH'|'EN'].labels.email,
+      tel: (lang === "EN" ? data?.label_tel_en : data?.label_tel_th) || defaultContent[lang as 'TH'|'EN'].labels.tel,
+      message: (lang === "EN" ? data?.label_msg_en : data?.label_msg_th) || defaultContent[lang as 'TH'|'EN'].labels.message,
+    },
+    errors: {
+      email: (lang === "EN" ? data?.err_email_en : data?.err_email_th) || defaultContent[lang as 'TH'|'EN'].errors.email,
+      tel: (lang === "EN" ? data?.err_tel_en : data?.err_tel_th) || defaultContent[lang as 'TH'|'EN'].errors.tel,
+    },
+    button: (lang === "EN" ? data?.btn_en : data?.btn_th) || defaultContent[lang as 'TH'|'EN'].button,
+    submitting: (lang === "EN" ? data?.btn_submitting_en : data?.btn_submitting_th) || defaultContent[lang as 'TH'|'EN'].submitting,
+    success: (lang === "EN" ? data?.msg_success_en : data?.msg_success_th) || defaultContent[lang as 'TH'|'EN'].success,
+    error: (lang === "EN" ? data?.msg_error_en : data?.msg_error_th) || defaultContent[lang as 'TH'|'EN'].error,
+  };
 
   const validateForm = (formData: FormData) => {
     const newErrors: { email?: string; tel?: string } = {};
@@ -93,13 +90,14 @@ export const ContactForm = ({ lang = "TH" }: { lang?: string }) => {
   };
 
   return (
-    /* 🟢 เปลี่ยน id เป็น "contact" เพื่อให้เด้งมาจาก Footer ได้แม่นยำครับ */
     <section id="contact" className="w-full bg-[#0B132B] min-h-[85vh] m-0 p-0 border-none relative overflow-hidden flex flex-col justify-center">
+      {/* Background Glow */}
       <div className="absolute top-0 right-0 w-1/2 h-full bg-[radial-gradient(circle_at_center,#3b82f608,transparent_70%)] -z-0 blur-3xl opacity-40 rounded-full pointer-events-none" />
       
       <div className="max-w-6xl mx-auto px-6 md:px-16 py-24 relative z-10 w-full">
         <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-center md:items-end">
 
+          {/* ฝั่ง Form (คง CSS เดิมเป๊ะ) */}
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -109,7 +107,7 @@ export const ContactForm = ({ lang = "TH" }: { lang?: string }) => {
             <h2 className={`text-xl md:text-2xl font-black text-[#0B132B] mb-2 text-left tracking-tight ${lang === 'TH' ? 'font-display' : 'font-sans'}`}>
               {t.headline}
             </h2>
-            <p className="text-slate-500 mb-5 text-[12px] md:text-sm leading-relaxed text-left font-medium opacity-80 font-sans">
+            <p className="text-slate-500 mb-5 text-[12px] md:text-sm leading-relaxed text-left font-medium opacity-80 font-sans whitespace-pre-line">
               {t.subheadline}
             </p>
 
@@ -168,10 +166,10 @@ export const ContactForm = ({ lang = "TH" }: { lang?: string }) => {
             </form>
           </motion.div>
 
-          {/* ฝั่งทีม Advisor */}
+          {/* ฝั่งทีม Advisor (คง CSS เดิมเป๊ะ) */}
           <div className="flex flex-col items-center justify-end relative md:h-full mt-10 md:mt-0 pointer-events-none">
             <motion.a
-              href="https://line.me/R/ti/p/@290rtmez"
+              href={t.lineLink}
               target="_blank"
               rel="noopener noreferrer"
               animate={{ y: [-2, 2, -2] }}
@@ -189,10 +187,15 @@ export const ContactForm = ({ lang = "TH" }: { lang?: string }) => {
 
             <div className="hidden md:block relative w-full">
               <motion.div animate={{ y: [-5, 5, -5] }} transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }} className="absolute top-10 -left-6 opacity-40 blur-[1.5px] z-0">
-                <div className="bg-gradient-to-b from-[#20DE6B] to-[#01B94C] rounded-[0.8rem] p-1.5 w-10 h-8 flex items-center justify-center shadow-lg"><span className="text-white text-[8px] font-black">LINE</span></div>
+                <div className="bg-gradient-to-b from-[#20DE6B] to-[#01B94C] rounded-[0.8rem] p-1.5 w-10 h-8 flex items-center justify-center shadow-lg">
+                  <span className="text-white text-[8px] font-black">LINE</span>
+                </div>
               </motion.div>
+
               <motion.div animate={{ y: [5, -5, 5] }} transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }} className="absolute bottom-20 -right-8 opacity-30 blur-[2px] scale-90 z-0">
-                <div className="bg-gradient-to-b from-[#20DE6B] to-[#01B94C] rounded-[0.8rem] p-1.5 w-10 h-8 flex items-center justify-center shadow-lg"><span className="text-white text-[8px] font-black">LINE</span></div>
+                <div className="bg-gradient-to-b from-[#20DE6B] to-[#01B94C] rounded-[0.8rem] p-1.5 w-10 h-8 flex items-center justify-center shadow-lg">
+                  <span className="text-white text-[8px] font-black">LINE</span>
+                </div>
               </motion.div>
               
               <Image
